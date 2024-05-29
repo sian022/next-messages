@@ -1,16 +1,9 @@
 export { auth as middleware } from "@/auth";
-// import { NextRequest, NextResponse } from "next/server";
+// import { auth } from "@/auth";
 
-// export const middleware = (request: NextRequest) => {
-//   const token = request.headers.get("Authorization");
-//   if (!token) {
-//     // return NextResponse.redirect(new URL("/login", request.url));
-//     return new Response("Unauthorized", { status: 401 });
+// export default auth((req) => {
+//   if (!req.auth) {
+//     const url = req.url.replace(req.nextUrl.pathname, "/login");
+//     return Response.redirect(url);
 //   }
-
-//   return NextResponse.next();
-// };
-
-// export const config = {
-//   matcher: ["/api/:path*"],
-// };
+// });

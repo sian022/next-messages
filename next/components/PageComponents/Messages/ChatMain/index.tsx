@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import ChatHeader from "./ChatHeader";
 import ChatWindow from "./ChatWindow";
 import ChatInput from "./ChatInput";
+import { auth } from "@/auth";
 
 interface ChatMainProps {
   id: string | number;

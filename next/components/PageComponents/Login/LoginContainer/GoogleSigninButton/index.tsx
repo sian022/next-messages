@@ -1,14 +1,18 @@
 "use client";
 
-import { signIn } from "@/auth";
+import { signIn, useSession } from "next-auth/react";
 import Button from "@/components/Common/Button";
 import useMostRecentChatmate from "@/hooks/messages/useMostRecentChatmate";
 
 const GoogleSigninButton = () => {
+  const session = useSession();
   const mostRecentChatmateId = useMostRecentChatmate();
 
   const loginWithGoogle = async () => {
-    await signIn("google", { redirectTo: `/messages/${mostRecentChatmateId}` });
+    await signIn("google", {
+      redirect: true,
+      callbackUrl: `/messages/${mostRecentChatmateId}`,
+    });
   };
 
   return (
@@ -18,8 +22,9 @@ const GoogleSigninButton = () => {
       color="primary"
       className="w-full"
       onClick={loginWithGoogle}
+      disabled={session.status === "loading"}
     >
-      Sign in with Google
+      {session.status === "loading" ? "Loading..." : "Sign in with Google"}
     </Button>
   );
 };
