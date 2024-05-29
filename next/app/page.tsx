@@ -1,10 +1,9 @@
-import useMostRecentChatmate from "@/hooks/messages/useMostRecentChatmateId";
-import { redirect } from "next/navigation";
+import useRedirectToRecentChatmate from "@/hooks/messages/useRedirectToRecentChatmate";
 
 const Home = () => {
-  const mostRecentChatmateId = useMostRecentChatmate();
+  const redirectToRecent = useRedirectToRecentChatmate();
 
-  return redirect(`/messages/${mostRecentChatmateId}`);
+  return redirectToRecent();
 };
 
 export default Home;

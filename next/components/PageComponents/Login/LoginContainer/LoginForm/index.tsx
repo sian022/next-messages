@@ -1,9 +1,7 @@
 "use client";
-
-import { signIn } from "@/auth";
 import Button from "@/components/Common/Button";
 import Input from "@/components/Common/Input";
-import useMostRecentChatmate from "@/hooks/messages/useMostRecentChatmateId";
+import useMostRecentChatmate from "@/hooks/messages/useMostRecentChatmate";
 import { useRouter } from "next/navigation";
 
 const LoginForm = () => {

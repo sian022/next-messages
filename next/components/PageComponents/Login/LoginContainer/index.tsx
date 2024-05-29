@@ -1,17 +1,10 @@
-"use client";
-
 import React from "react";
 import LoginForm from "./LoginForm";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "@/components/Common/Button";
-import { signIn } from "@/auth";
+import GoogleSigninButton from "./GoogleSigninButton";
 
 const LoginContainer = () => {
-  const handleGoogleSignIn = async () => {
-    await signIn("google");
-  };
-
   return (
     <div className="flex flex-col items-center w-[400px]">
       <Image
@@ -34,15 +27,7 @@ const LoginContainer = () => {
         <div className="h-[1px] bg-gray-600 w-full" />
       </div>
 
-      <Button
-        type="submit"
-        variant="outlined"
-        color="primary"
-        onClick={handleGoogleSignIn}
-        className="w-full"
-      >
-        Sign in with Google
-      </Button>
+      <GoogleSigninButton />
     </div>
   );
 };
