@@ -32,6 +32,10 @@ const Button = ({
     className += customClassName;
   }
 
+  if (props.disabled) {
+    className += "opacity-50";
+  }
+
   return (
     <button className={className} {...props}>
       {children}
