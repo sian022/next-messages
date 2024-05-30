@@ -7,6 +7,7 @@ import { LoginSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import FormError from "@/components/Common/FormError";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -43,6 +44,8 @@ const LoginForm = () => {
         {...register("password")}
         autoComplete="current-password"
       />
+
+      <FormError message="Something went wrong" />
 
       <Button
         type="submit"

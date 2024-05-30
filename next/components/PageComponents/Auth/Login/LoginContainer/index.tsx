@@ -1,18 +1,12 @@
 import React from "react";
 import LoginForm from "./LoginForm";
-import Image from "next/image";
 import Link from "next/link";
 import GoogleSigninButton from "./GoogleSigninButton";
+import AuthContainer from "../../AuthContainer";
 
 const LoginContainer = () => {
   return (
-    <div className="flex flex-col items-center w-[400px]">
-      <Image
-        src="/NextMessagesLogoText.png"
-        width={400}
-        height={400}
-        alt="logo"
-      />
+    <AuthContainer>
       <LoginForm />
       <div className="flex gap-1">
         <p>Don&apos;t have an account?</p>{" "}
@@ -28,7 +22,7 @@ const LoginContainer = () => {
       </div>
 
       <GoogleSigninButton />
-    </div>
+    </AuthContainer>
   );
 };
 
