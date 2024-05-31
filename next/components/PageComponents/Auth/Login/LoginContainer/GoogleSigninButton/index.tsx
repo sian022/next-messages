@@ -7,13 +7,11 @@ import { useRouter } from "next/navigation";
 
 const GoogleSigninButton = () => {
   const session = useSession();
-  const router = useRouter();
   const mostRecentChatmateId = useMostRecentChatmate();
 
   const loginWithGoogle = async () => {
     try {
-      await signIn("google");
-      router.push(`/messages/${mostRecentChatmateId}`);
+      await signIn("google", { callbackUrl: `/chat/${mostRecentChatmateId}` });
     } catch (err) {
       console.log(err);
     }

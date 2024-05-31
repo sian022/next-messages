@@ -3,7 +3,6 @@
 import Button from "@/components/Common/Button";
 import FormError from "@/components/Common/FormError";
 import Input from "@/components/Common/Input";
-import Spinner from "@/components/Common/Spinner";
 import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -18,11 +17,27 @@ const RegisterForm = ({}: RegisterFormProps) => {
     formState: { isValid },
   } = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
-    defaultValues: { username: "", password: "", confirmPassword: "" },
+    defaultValues: { email: "", password: "", confirmPassword: "" },
   });
 
-  const onSubmit = (data: z.infer<typeof RegisterSchema>) => {
-    console.log(data, " data");
+  const onSubmit = async (data: z.infer<typeof RegisterSchema>) => {
+    try {
+      const response = await fetch("/api/user", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const json = await response.json();
+
+      if (!response.ok) {
+        throw new Error(json.message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -30,11 +45,13 @@ const RegisterForm = ({}: RegisterFormProps) => {
       className="w-full flex flex-col gap-4 rounded-md py-6"
       onSubmit={handleSubmit(onSubmit)}
     >
+      <Input type="text" placeholder="Name" {...register("name")} />
+
       <Input
         type="text"
-        placeholder="Username"
-        {...register("username")}
-        autoComplete="username"
+        placeholder="Email"
+        {...register("email")}
+        autoComplete="email"
       />
 
       <Input
@@ -56,8 +73,7 @@ const RegisterForm = ({}: RegisterFormProps) => {
         type="submit"
         variant="filled"
         color="primary"
-        // disabled={!isValid}
-        disabled
+        disabled={!isValid}
       >
         Register
       </Button>
