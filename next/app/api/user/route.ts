@@ -1,33 +1,38 @@
+import { getUserByEmail } from "@/data/user";
 import { db } from "@/db";
 import { RegisterSchema } from "@/schemas";
 import bcrypt from "bcrypt";
-import { NextApiRequest } from "next";
+import { NextRequest } from "next/server";
 
-export const GET = async (req: NextApiRequest) => {
-  await db.user.findMany();
-  return Response.json({ message: "Hello world!" });
+export const GET = async (req: NextRequest) => {
+  const res = await db.user.findMany();
+  return Response.json({ users: res });
 };
 
-export const POST = async (req: NextApiRequest) => {
+export const POST = async (req: NextRequest) => {
   try {
-    const validatedFields = RegisterSchema.safeParse(req.body);
+    const data = await req.json();
+    const response = RegisterSchema.safeParse(data);
 
-    if (!validatedFields.success) {
-      return Response.json({ message: "Invalid fields" });
+    if (!response.success) {
+      const { errors } = response.error;
+
+      return Response.json(
+        { message: "Invalid requests", errors },
+        { status: 400 }
+      );
     }
 
-    const { name, email, password } = validatedFields.data;
+    const { name, email, password } = response.data;
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const existingUser = await db.user.findUnique({
-      where: { email },
-    });
+    const existingUser = await getUserByEmail(email);
 
     if (existingUser) {
-      return Response.json({ message: "User already exists" });
+      return Response.json({ message: "User already exists" }, { status: 409 });
     }
 
-    await db.user.create({
+    const user = await db.user.create({
       data: {
         name,
         email,
@@ -36,8 +41,8 @@ export const POST = async (req: NextApiRequest) => {
     });
 
     // TODO: Send email verification
-    return Response.json({ message: "User registered successfully" });
+    return Response.json({ message: "User registered successfully", user });
   } catch (err) {
-    return Response.json({ message: "Something went wrong" });
+    return Response.json({ message: "Something went wrong" }, { status: 500 });
   }
 };

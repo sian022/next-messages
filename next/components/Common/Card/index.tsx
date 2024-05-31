@@ -1,15 +1,14 @@
+import cn from "@/utils/cn";
 import React, { PropsWithChildren } from "react";
 
 type Card = {
   className?: string;
 } & PropsWithChildren;
 
-const Card = ({ className: classNameProps, children }: Card) => {
-  let className = "bg-white rounded-md";
+const Card = ({ className: customClassName, children }: Card) => {
+  const baseClasses = "bg-white rounded-md";
 
-  if (classNameProps) {
-    className += ` ${classNameProps}`;
-  }
+  const className = cn(baseClasses, customClassName);
 
   return <div className={className}>{children}</div>;
 };

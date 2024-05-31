@@ -3,7 +3,6 @@
 import { signIn, useSession } from "next-auth/react";
 import Button from "@/components/Common/Button";
 import useMostRecentChatmate from "@/hooks/messages/useMostRecentChatmate";
-import { useRouter } from "next/navigation";
 
 const GoogleSigninButton = () => {
   const session = useSession();
@@ -11,7 +10,9 @@ const GoogleSigninButton = () => {
 
   const loginWithGoogle = async () => {
     try {
-      await signIn("google", { callbackUrl: `/chat/${mostRecentChatmateId}` });
+      await signIn("google", {
+        callbackUrl: `/messages/${mostRecentChatmateId}`,
+      });
     } catch (err) {
       console.log(err);
     }

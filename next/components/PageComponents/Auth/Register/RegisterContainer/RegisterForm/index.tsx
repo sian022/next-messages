@@ -5,16 +5,17 @@ import FormError from "@/components/Common/FormError";
 import Input from "@/components/Common/Input";
 import { RegisterSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-interface RegisterFormProps {}
+const RegisterForm = () => {
+  const [errorMessage, setErrorMessage] = useState("");
 
-const RegisterForm = ({}: RegisterFormProps) => {
   const {
     register,
     handleSubmit,
-    formState: { isValid },
+    formState: { isValid, errors },
   } = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: { email: "", password: "", confirmPassword: "" },
@@ -35,8 +36,8 @@ const RegisterForm = ({}: RegisterFormProps) => {
       if (!response.ok) {
         throw new Error(json.message);
       }
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      setErrorMessage("Something went wrong");
     }
   };
 
@@ -67,7 +68,7 @@ const RegisterForm = ({}: RegisterFormProps) => {
         {...register("confirmPassword")}
       />
 
-      <FormError message="Something went wrong" />
+      <FormError message={errorMessage} />
 
       <Button
         type="submit"

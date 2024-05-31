@@ -1,13 +1,18 @@
 import { InputProps } from "@/types/common";
+import cn from "@/utils/cn";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const SearchInput = ({ type, ...props }: InputProps) => {
-  let className =
+const SearchInput = ({
+  type,
+  className: customClassName,
+  ...props
+}: InputProps) => {
+  const baseClasses =
     "w-full py-2 px-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent";
 
-  if (props.className) className += ` ${props.className}`;
+  const className = cn(baseClasses, customClassName);
 
   return (
     <div className="relative">

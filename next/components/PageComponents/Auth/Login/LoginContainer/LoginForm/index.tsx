@@ -19,7 +19,7 @@ const LoginForm = () => {
     formState: { isValid },
   } = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: { username: "", password: "" },
+    defaultValues: { email: "", password: "" },
   });
 
   const onSubmit = (data: z.infer<typeof LoginSchema>) => {
@@ -34,9 +34,9 @@ const LoginForm = () => {
     >
       <Input
         type="text"
-        placeholder="Username"
-        {...register("username")}
-        autoComplete="username"
+        placeholder="Email"
+        {...register("email")}
+        autoComplete="email"
       />
       <Input
         type="password"
@@ -45,7 +45,7 @@ const LoginForm = () => {
         autoComplete="current-password"
       />
 
-      <FormError message="Something went wrong" />
+      <FormError message="" />
 
       <Button
         type="submit"

@@ -2,10 +2,10 @@
 import { auth as middleware } from "@/auth";
 
 export default middleware((req) => {
-  // const publicRoutes = ["/login", "/signup"];
-  // if (!req.auth && !publicRoutes.includes(req.nextUrl.pathname)) {
-  //   return Response.redirect(req.nextUrl.origin + "/login");
-  // }
+  const publicRoutes = ["/login", "/signup"];
+  if (!req.auth && !publicRoutes.includes(req.nextUrl.pathname)) {
+    return Response.redirect(req.nextUrl.origin + "/login");
+  }
 });
 
 // Optionally, don't invoke Middleware on some paths
