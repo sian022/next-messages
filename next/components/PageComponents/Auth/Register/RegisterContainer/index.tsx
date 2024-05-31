@@ -9,9 +9,9 @@ const RegisterContainer = () => {
       <RegisterForm />
 
       <div className="flex gap-1">
-        <p>Don&apos;t have an account?</p>{" "}
-        <Link href="/signup" className="font-semibold hover:underline">
-          Sign up
+        <p>Return to</p>{" "}
+        <Link href="/login" className="font-semibold hover:underline">
+          Login
         </Link>
       </div>
     </AuthContainer>
